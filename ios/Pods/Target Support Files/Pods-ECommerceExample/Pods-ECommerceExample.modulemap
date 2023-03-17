@@ -1,0 +1,6 @@
+module Pods_ECommerceExample {
+  umbrella header "Pods-ECommerceExample-umbrella.h"
+
+  export *
+  module * { export * }
+}
