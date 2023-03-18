@@ -1,7 +1,11 @@
-import { View, VirtualizedList, StyleSheet } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { VirtualizedList, StyleSheet, SafeAreaView } from 'react-native'
+import React, { useEffect, useState, useContext } from 'react'
+import { View, TouchableOpacity } from 'react-native-ui-lib'
+// Context
+import { ThemeContext } from '../Contexts/ThemeContext';
 // Components
 import ProductCard from '../Components/HomeSc/ProductCard';
+import HeaderBar from '../Components/HomeSc/HeaderBar';
 // Service
 import { getProducts } from '../service/index'
 
@@ -9,17 +13,29 @@ const editImageUri = (uri) => {
     return uri.replace('http', 'https')
 }
 
+const editData = (data) => {
+    return data
+        .map(el => ({
+            ...el,
+            image: editImageUri(el.image),
+            isAdded: false
+        }))
+}
+
 export default function HomeSc() {
     const [isLoading, setisLoading] = useState(false)
     const [data, setdata] = useState([])
+    const { theme } = useContext(ThemeContext)
+
+    const addToCardPress = () => {
+
+    }
 
     const get = async () => {
         try {
             setisLoading(true)
-            const result = await getProducts({ brand: "Tesla" })
-            const helperArray = result
-                .data.map(el => ({ ...el, image: editImageUri(el.image) }))
-            setdata(helperArray)
+            const result = await getProducts()
+            setdata(editData(result.data))
         } catch (error) {
             console.log(error);
         } finally { setisLoading(false) }
@@ -28,7 +44,8 @@ export default function HomeSc() {
     useEffect(() => { get() }, [])
 
     return (
-        <View style={{ flex: 1 }}>
+        <View flex style={{ backgroundColor: theme.backgroundSurface }}>
+            <HeaderBar />
             <VirtualizedList
                 keyExtractor={(_, index) => index}
                 data={data}
@@ -48,12 +65,3 @@ export default function HomeSc() {
         </View>
     )
 }
-const styles = StyleSheet.create({
-    productCardContainer: {
-        width: "50%",
-        paddingHorizontal: 4,
-    },
-    image: {
-        aspectRatio: 2 / 3
-    }
-})

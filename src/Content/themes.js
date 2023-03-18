@@ -5,4 +5,5 @@ export const defaultTheme = {
     black: "#222222",
     iconDisabled: "#C3C3C7",
     iconActive: "#222222",
+    textinputBackground: "#F7F7F7"
 };
