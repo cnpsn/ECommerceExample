@@ -8,7 +8,7 @@ import { ThemeContext } from '../../Contexts/ThemeContext'
 import HeartFilled from '../../Assets/SvgIconsComponents/HeartFilled'
 
 export default function ProductCard({ item }) {
-    const { brand, createdAt, description, id, image, model, name, price, isAdded } = item
+    const { brand, id, image, model, price, name } = item
     const { theme } = useContext(ThemeContext)
     return (
         <View
@@ -31,11 +31,11 @@ export default function ProductCard({ item }) {
             </FastImage>
             <View style={[styles.contentContainer, { backgroundColor: theme.backgroundSurface }]}>
                 <Text text60R>{brand}</Text>
-                <Text text70L>{name}</Text>
+                <Text text70L>{model}</Text>
             </View>
             <View style={[styles.buttonContainer, { backgroundColor: theme.backgroundSurface }]}>
-                <TouchableOpacity style={[styles.button]}>
-                    <Text textL white>Add to Card</Text>
+                <TouchableOpacity style={[styles.button, { backgroundColor: theme.black }]}>
+                    <Text text70L white>Add to Card</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
     },
     button: {
         minHeight: 48,
-        backgroundColor: "black",
         justifyContent: "center",
         alignItems: "center"
     },

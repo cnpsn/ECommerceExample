@@ -1,7 +1,8 @@
-import { View, SafeAreaView, StyleSheet } from 'react-native'
+import { View, SafeAreaView, StyleSheet, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
 // Context
 import { ThemeContext } from '../../Contexts/ThemeContext'
+import { GlobalContext } from '../../Contexts/GlobalContext'
 // Components
 import SearchView from './SearchView'
 // Icons
@@ -9,14 +10,14 @@ import AdjustmentsHorizontal from '../../Assets/SvgIconsComponents/AdjustmentsHo
 
 export default function HeaderBar() {
     const { theme } = useContext(ThemeContext)
-
+    const { filterModalOnOpen } = useContext(GlobalContext)
     return (
         <SafeAreaView>
             <View style={[styles.container]}>
                 <SearchView />
-                <View style={[styles.filterContainer]}>
+                <TouchableOpacity onPress={filterModalOnOpen} style={[styles.filterContainer]}>
                     <AdjustmentsHorizontal width={32} height={32} color={theme.black} />
-                </View>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     )
