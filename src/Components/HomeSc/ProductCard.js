@@ -6,10 +6,12 @@ import React, { useContext } from 'react'
 import { ThemeContext } from '../../Contexts/ThemeContext'
 // Icons
 import HeartFilled from '../../Assets/SvgIconsComponents/HeartFilled'
+import { GlobalContext } from '../../Contexts/GlobalContext'
 
 export default function ProductCard({ item }) {
-    const { brand, id, image, model, price, name } = item
+    const { brand, id, image, model, price } = item
     const { theme } = useContext(ThemeContext)
+    const { addToCartPress } = useContext(GlobalContext)
     return (
         <View
             bg-grey70
@@ -34,8 +36,8 @@ export default function ProductCard({ item }) {
                 <Text text70L>{model}</Text>
             </View>
             <View style={[styles.buttonContainer, { backgroundColor: theme.backgroundSurface }]}>
-                <TouchableOpacity style={[styles.button, { backgroundColor: theme.black }]}>
-                    <Text text70L white>Add to Card</Text>
+                <TouchableOpacity onPress={() => addToCartPress(item)} style={[styles.button, { backgroundColor: theme.black }]}>
+                    <Text text70L white>Add to Cart</Text>
                 </TouchableOpacity>
             </View>
         </View>

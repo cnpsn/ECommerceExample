@@ -38,12 +38,14 @@ const getQueryParams = (filters, searchValue, page, limit) => {
 }
 
 export default function HomeSc() {
-    const [loadMoreIsLoading, setloadMoreIsLoading] = useState(false)
     const { filterList, searchValue } = useContext(GlobalContext)
-    const [isLoading, setisLoading] = useState(false)
     const { theme } = useContext(ThemeContext)
-    const loadMoreIsFinish = useRef(false)
+
+    const [loadMoreIsLoading, setloadMoreIsLoading] = useState(false)
+    const [isLoading, setisLoading] = useState(false)
     const [data, setdata] = useState([])
+
+    const loadMoreIsFinish = useRef(false)
     const page = useRef(1)
 
     const get = async () => {
@@ -54,6 +56,7 @@ export default function HomeSc() {
             const params = getQueryParams(filterList, searchValue, page.current, LIMIT)
             const products = await getProducts(params)
             const result = editData(products.data)
+            result.map(el => console.log(el))
             setdata(result)
         } catch (error) {
             console.log(error);

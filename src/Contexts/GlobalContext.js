@@ -7,6 +7,7 @@ function GlobalProvider(props) {
     const [filterList, setfilterList] = useState([...staticFilters])
     const [modalFilterList, setmodalFilterList] = useState([...staticFilters])
     const [searchValue, setsearchValue] = useState("")
+    const [basketData, setbasketData] = useState([])
     const modalizeRef = useRef(null);
 
     const filterModalOnOpen = async () => {
@@ -15,6 +16,10 @@ function GlobalProvider(props) {
         setmodalFilterList(helperArray)
         modalizeRef.current?.open();
     };
+
+    const addToCartPress = (element) => {
+        console.log(element);
+    }
 
     return (
         <GlobalContext.Provider value={{
@@ -25,7 +30,8 @@ function GlobalProvider(props) {
             modalFilterList: modalFilterList,
             setmodalFilterList: v => setmodalFilterList(v),
             searchValue: searchValue,
-            setsearchValue: v => setsearchValue(v)
+            setsearchValue: v => setsearchValue(v),
+            addToCartPress: v => addToCartPress(v)
         }}>
             {props.children}
         </GlobalContext.Provider>
