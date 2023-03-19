@@ -1,5 +1,8 @@
-import React, { createContext, useRef, useState } from 'react'
+import React, { createContext, useRef, useState, useEffect } from 'react'
 import { staticFilters } from '../Content/staticFilters';
+import { basketSchema } from '../Realm/basketSchema'
+import Realm from "realm";
+const { UUID } = Realm.BSON;
 
 const GlobalContext = createContext();
 
@@ -18,8 +21,42 @@ function GlobalProvider(props) {
     };
 
     const addToCartPress = (element) => {
-        console.log(element);
+        const realm = new Realm({ schema: [basketSchema] });
+        const item = realm.objects('Basket').filtered('id = $0', element.id)[0];
+        if (!item) {
+            realm.write(() => {
+                realm.create('Basket', { ...element, quantity: 1, _id: new UUID() });
+            });
+        } else {
+            realm.write(() => {
+                item.quantity += 1;
+            });
+        }
+        setbasketData(realm.objects('Basket'))
+    };
+
+    const removeFromCartPress = (element) => {
+        const realm = new Realm({ schema: [basketSchema] });
+        const item = realm.objects('Basket').filtered('id = $0', element.id)[0];
+        if (!item) {
+            return;
+        } else {
+            realm.write(() => {
+                item.quantity -= 1;
+                if (item.quantity <= 0) {
+                    realm.delete(item);
+                }
+            });
+        }
+        setbasketData(realm.objects('Basket'));
+    };
+
+    const getFromLocalStore = () => {
+        const realm = new Realm({ schema: [basketSchema] });
+        setbasketData(realm.objects('Basket'))
     }
+
+    useEffect(() => { getFromLocalStore() }, [])
 
     return (
         <GlobalContext.Provider value={{
@@ -30,8 +67,10 @@ function GlobalProvider(props) {
             modalFilterList: modalFilterList,
             setmodalFilterList: v => setmodalFilterList(v),
             searchValue: searchValue,
+            basketData: basketData,
             setsearchValue: v => setsearchValue(v),
-            addToCartPress: v => addToCartPress(v)
+            addToCartPress: v => addToCartPress(v),
+            removeFromCartPress: v => removeFromCartPress(v)
         }}>
             {props.children}
         </GlobalContext.Provider>

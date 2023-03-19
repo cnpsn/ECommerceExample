@@ -8,4 +8,5 @@ export const defaultTheme = {
     textinputBackground: "#F7F7F7",
     backdrop: "#00000059",
     white: "#fff",
+    outlineDefault: "#E8ECF0"
 };

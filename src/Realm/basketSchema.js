@@ -11,6 +11,6 @@ export const basketSchema = {
         model: "string",
         name: "string",
         price: "string",
-        quantity:"int"
+        quantity: "int"
     },
 };

@@ -56,7 +56,6 @@ export default function HomeSc() {
             const params = getQueryParams(filterList, searchValue, page.current, LIMIT)
             const products = await getProducts(params)
             const result = editData(products.data)
-            result.map(el => console.log(el))
             setdata(result)
         } catch (error) {
             console.log(error);
