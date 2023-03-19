@@ -27,20 +27,20 @@ const editData = (data) => {
         }))
 }
 
-const getQueryParams = (filters) => {
+const getQueryParams = (filters, searchValue, page, limit) => {
     const helperObject = {}
     filters.forEach(element => {
         const { data, title } = element
         const selectedItems = data.filter(x => x.selected)
         if (selectedItems.length) { helperObject[title] = selectedItems[0].name }
     });
-    return helperObject
+    return { ...helperObject, description: searchValue, page, limit }
 }
 
 export default function HomeSc() {
     const [loadMoreIsLoading, setloadMoreIsLoading] = useState(false)
+    const { filterList, searchValue } = useContext(GlobalContext)
     const [isLoading, setisLoading] = useState(false)
-    const { filterList } = useContext(GlobalContext)
     const { theme } = useContext(ThemeContext)
     const loadMoreIsFinish = useRef(false)
     const [data, setdata] = useState([])
@@ -51,12 +51,8 @@ export default function HomeSc() {
             setisLoading(true)
             loadMoreIsFinish.current = false
             page.current = 1
-            const params = getQueryParams(filterList)
-            const products = await getProducts({
-                ...params,
-                limit: LIMIT,
-                page: page.current
-            })
+            const params = getQueryParams(filterList, searchValue, page.current, LIMIT)
+            const products = await getProducts(params)
             const result = editData(products.data)
             setdata(result)
         } catch (error) {
@@ -70,12 +66,8 @@ export default function HomeSc() {
             setloadMoreIsLoading(true)
             loadMoreIsFinish.current = true
             ++page.current
-            const params = getQueryParams(filterList)
-            const products = await getProducts({
-                ...params,
-                limit: LIMIT,
-                page: page.current
-            })
+            const params = getQueryParams(filterList, searchValue, page.current, LIMIT)
+            const products = await getProducts(params)
             const result = editData(products.data)
             if (result.length == LIMIT) {
                 loadMoreIsFinish.current = false
@@ -88,7 +80,7 @@ export default function HomeSc() {
         }
     }
 
-    useEffect(() => { get() }, [filterList])
+    useEffect(() => { get() }, [filterList, searchValue])
 
     return (
         <View flex style={{ backgroundColor: theme.backgroundSurface }}>

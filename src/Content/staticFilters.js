@@ -11,13 +11,4 @@ export const staticFilters = [
             { name: "Porsche", selected: false },
         ]
     },
-    // {
-    //     title: "model", data: [
-    //         { name: "Jetta", selected: false },
-    //         { name: "Aventador", selected: false },
-    //         { name: "Model S", selected: false },
-    //         { name: "Fiesta", selected: false },
-    //         { name: "Spyder", selected: false }
-    //     ]
-    // }
 ]

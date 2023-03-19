@@ -34,7 +34,7 @@ export default function FilterModal() {
         >
             {modalFilterList.map((sectionElement, sectionIndex) => {
                 const { title, data } = sectionElement
-                return <View>
+                return <View key={sectionIndex}>
                     <Text marginL-32 text50L black>{title}</Text>
                     <View style={[styles.badgeContainer]}>
                         {data.map((element, index) => {
