@@ -1,4 +1,7 @@
 export {default as AdjustmentsHorizontal} from './AdjustmentsHorizontal';
+export {default as AlertCircle} from './AlertCircle';
+export {default as ArrowLeft} from './ArrowLeft';
+export {default as CheckCircle} from './CheckCircle';
 export {default as HeartFilled} from './HeartFilled';
 export {default as Heart} from './Heart';
 export {default as Home} from './Home';

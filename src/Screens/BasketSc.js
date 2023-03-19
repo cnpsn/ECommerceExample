@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, VirtualizedList, TouchableOpacity } from 'react-native'
+import { SafeAreaView, StyleSheet, VirtualizedList } from 'react-native'
 import { Text, View } from 'react-native-ui-lib'
 import React, { useContext } from 'react'
 // Context
@@ -6,6 +6,7 @@ import { GlobalContext } from '../Contexts/GlobalContext'
 import { ThemeContext } from '../Contexts/ThemeContext'
 // Components
 import ProductCard from '../Components/BasketSc/ProductCard'
+import MainButton from '../Components/Global/MainButton'
 // Methots
 import getTotalAmount from '../Methots/getTotalAmount'
 
@@ -35,14 +36,7 @@ export default function BasketSc() {
                     <Text text70L>Sub total</Text>
                     <Text text50BO>₺{getTotalAmount(basketData)}</Text>
                 </View>
-                <View style={[styles.buttonContainer, { backgroundColor: theme.backgroundSurface }]}>
-                    <TouchableOpacity
-                        onPress={() => addToCartPress(item)}
-                        style={[styles.button, { backgroundColor: theme.black }]}
-                    >
-                        <Text text70L white>Check out</Text>
-                    </TouchableOpacity>
-                </View>
+                <MainButton label="Check out" style={{ padding: 16 }} />
             </View>
         </View>
     )
@@ -63,13 +57,5 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         padding: 16
-    },
-    buttonContainer: {
-        padding: 16
-    },
-    button: {
-        minHeight: 48,
-        justifyContent: "center",
-        alignItems: "center"
     },
 })

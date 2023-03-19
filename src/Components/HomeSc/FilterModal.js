@@ -7,13 +7,13 @@ import { GlobalContext } from '../../Contexts/GlobalContext';
 import { ThemeContext } from '../../Contexts/ThemeContext';
 
 export default function FilterModal() {
-    const { modalizeRef, setfilterList, modalFilterList, setmodalFilterList } = useContext(GlobalContext)
+    const { modalizeRef, setFilterList, modalFilterList, setModalFilterList } = useContext(GlobalContext)
     const { theme } = useContext(ThemeContext)
 
     const applyPress = () => {
         const helperJson = JSON.stringify(modalFilterList)
         const helperArray = JSON.parse(helperJson)
-        setfilterList(helperArray)
+        setFilterList(helperArray)
         modalizeRef.current?.close()
     }
 
@@ -23,7 +23,7 @@ export default function FilterModal() {
         const section = helperArray[sectionIndex]
         section.data = section.data
             .map((element, _index) => ({ ...element, selected: index == _index ? !element.selected : false }))
-        setmodalFilterList(helperArray)
+        setModalFilterList(helperArray)
     }
 
     return (

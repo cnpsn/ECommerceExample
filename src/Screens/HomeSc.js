@@ -14,16 +14,24 @@ import { getProducts } from '../service/index'
 
 const LIMIT = 12;
 
+const updateData = (data, favoritesData) => {
+    return data
+        .map(element => ({
+            ...element,
+            isFavorite: favoritesData.some(x => x.id == element.id)
+        }))
+}
+
 const editImageUri = (uri) => {
     return uri.replace('http', 'https')
 }
 
-const editData = (data) => {
+const editData = (data, favoritesData) => {
     return data
         .map(el => ({
             ...el,
             image: editImageUri(el.image),
-            isAdded: false
+            isFavorite: favoritesData.some(x => x.id == el.id)
         }))
 }
 
@@ -38,7 +46,7 @@ const getQueryParams = (filters, searchValue, page, limit) => {
 }
 
 export default function HomeSc() {
-    const { filterList, searchValue } = useContext(GlobalContext)
+    const { filterList, searchValue, favoritesData, realm } = useContext(GlobalContext)
     const { theme } = useContext(ThemeContext)
 
     const [loadMoreIsLoading, setloadMoreIsLoading] = useState(false)
@@ -55,7 +63,7 @@ export default function HomeSc() {
             page.current = 1
             const params = getQueryParams(filterList, searchValue, page.current, LIMIT)
             const products = await getProducts(params)
-            const result = editData(products.data)
+            const result = editData(products.data, realm.objects('Favorites'))
             setdata(result)
         } catch (error) {
             console.log(error);
@@ -70,7 +78,7 @@ export default function HomeSc() {
             ++page.current
             const params = getQueryParams(filterList, searchValue, page.current, LIMIT)
             const products = await getProducts(params)
-            const result = editData(products.data)
+            const result = editData(products.data, favoritesData)
             if (result.length == LIMIT) {
                 loadMoreIsFinish.current = false
             }
@@ -81,6 +89,11 @@ export default function HomeSc() {
             setloadMoreIsLoading(false)
         }
     }
+
+    useEffect(() => {
+        const result = updateData(data, favoritesData)
+        setdata(result)
+    }, [favoritesData])
 
     useEffect(() => { get() }, [filterList, searchValue])
 
