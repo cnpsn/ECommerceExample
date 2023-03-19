@@ -10,13 +10,15 @@ import AdjustmentsHorizontal from '../../Assets/SvgIconsComponents/AdjustmentsHo
 
 export default function HeaderBar() {
     const { theme } = useContext(ThemeContext)
-    const { filterModalOnOpen } = useContext(GlobalContext)
+    const { filterModalOnOpen, filterList } = useContext(GlobalContext)
+    const isFilterActive = filterList.some(element => element.data.some(el => el.selected))
     return (
         <SafeAreaView>
             <View style={[styles.container]}>
                 <SearchView />
                 <TouchableOpacity onPress={filterModalOnOpen} style={[styles.filterContainer]}>
                     <AdjustmentsHorizontal width={32} height={32} color={theme.black} />
+                    {isFilterActive && <View style={[styles.point, { backgroundColor: theme.primary }]} />}
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
@@ -35,5 +37,15 @@ const styles = StyleSheet.create({
         borderRadius: 24,
         justifyContent: "center",
         alignItems: "center",
+    },
+    point: {
+        width: 12,
+        height: 12,
+        borderRadius: 6,
+        position: "absolute",
+        top: 8,
+        right: 8,
+        elevation: 1,
+        zIndex: 1
     }
 })
