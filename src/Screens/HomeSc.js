@@ -42,7 +42,7 @@ const getQueryParams = (filters, searchValue, page, limit) => {
         const selectedItems = data.filter(x => x.selected)
         if (selectedItems.length) { helperObject[title] = selectedItems[0].name }
     });
-    return { ...helperObject, description: searchValue, page, limit }
+    return { ...helperObject, name: searchValue, page, limit }
 }
 
 export default function HomeSc() {

@@ -8,18 +8,18 @@ import Search from '../../Assets/SvgIconsComponents/Search'
 import XCircle from '../../Assets/SvgIconsComponents/XCircle'
 
 export default function SearchView() {
-    const { setsearchValue } = useContext(GlobalContext)
+    const { setSearchValue } = useContext(GlobalContext)
     const { theme } = useContext(ThemeContext)
     const [text, setText] = useState('');
     const textInputRef = useRef(null);
 
     const handlePress = () => {
-        setsearchValue(text)
+        setSearchValue(text)
     }
 
     const clearPress = () => {
         textInputRef.current.clear();
-        setsearchValue("")
+        setSearchValue("")
         setText("")
     }
 

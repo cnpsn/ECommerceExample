@@ -13,7 +13,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler'
 import MainButton from '../Components/Global/MainButton';
 
 export default function ProductDetailSc(props) {
-    const { item: { description, image, model, name, price } } = props.route.params
+    const { item: { description, image, brand, name, price } } = props.route.params
     const { theme } = useContext(ThemeContext)
     const { addToCartPress } = useContext(GlobalContext)
 
@@ -39,8 +39,8 @@ export default function ProductDetailSc(props) {
                     resizeMode={FastImage.resizeMode.cover}
                 ></FastImage>
                 <View style={[styles.contentContainer]}>
-                    <Text text50R>{name}</Text>
-                    <Text text70L>{model}</Text>
+                    <Text text50R>{brand}</Text>
+                    <Text text70L>{name}</Text>
                     <Text text80R marginT-32>{description}</Text>
                 </View>
             </ScrollView>

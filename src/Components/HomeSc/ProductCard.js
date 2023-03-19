@@ -13,7 +13,7 @@ import { GlobalContext } from '../../Contexts/GlobalContext'
 
 export default function ProductCard({ item }) {
     const { addToCartPress, toggleFavorite } = useContext(GlobalContext)
-    const { brand, id, image, model, price, isFavorite } = item
+    const { brand, id, image, name, price, isFavorite } = item
     const { theme } = useContext(ThemeContext)
     const navigation = useNavigation();
 
@@ -41,7 +41,7 @@ export default function ProductCard({ item }) {
                 </FastImage>
                 <View style={[styles.contentContainer, { backgroundColor: theme.backgroundSurface }]}>
                     <Text text60R>{brand}</Text>
-                    <Text text70L>{model}</Text>
+                    <Text text70L>{name}</Text>
                 </View>
                 <MainButton label="Add to Cart" onPress={() => addToCartPress(item)} />
             </View>
